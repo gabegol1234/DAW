@@ -67,7 +67,7 @@ if ($retorno && is_array($retorno)) {
             }
 
             echo "<br/><a href='editar.php?id=" . $linha["id_filmes"] . "'>Editar</a>";
-            echo "<a href='excluir.php?genero=" . $linha["id_filmes"] . "'>Excluir</a>";
+            echo "<a href='excluir.php?id_filmes=" . $linha["id_filmes"] . "'>Excluir</a>";
             echo "<br/><br/>";
         } else {
             echo "<p>Erro: Dados incompletos para o produto.</p>";

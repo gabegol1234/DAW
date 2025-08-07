@@ -19,9 +19,10 @@ $categorias = $objcategoriasDAO->listar();
     ?>
 </ul>
 <?php
+$id=$_GET["id"];
 $objfilmesDAO = new filmesDAO();
 $objimagensDAO = new imgDAO();
-$retorno = $objfilmesDAO->listar(" ORDER BY id_filmes DESC LIMIT 3");
+$retorno = $objfilmesDAO->listar(" WHERE genero=$id");
 $objimagemDAO = new imgDAO();
 
 
@@ -38,9 +39,9 @@ if ($retorno && is_array($retorno)) {
     $retornoimg = $objimagensDAO->retornarUm($linha["id_filmes"]);
     if($retornoimg>0)
     echo "<img src='../imagens/".$retornoimg["nome"]."'/>";
-     ?>
-</div>
-        <?php
+
+   
+   
 
     }}
         ?>
