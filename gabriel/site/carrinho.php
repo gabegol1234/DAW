@@ -17,9 +17,9 @@ if (!isset($_SESSION["carrinho"])) {
         </thead>
         <tbody>
             <?php
-            include_once "../class/produto.class.php";
-            include_once "../class/produtoDAO.class.php";
-            $objProdutosDAO = new ProdutosDAO();
+            include_once "../class/filmes.class.php";
+            include_once "../class/filmesDAO.class.php";
+            $objProdutosDAO = new filmesDAO();
 
             foreach ($_SESSION["carrinho"] as $id) {
                 $retorno = $objProdutosDAO->retornarUm($id);

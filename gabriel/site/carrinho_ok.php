@@ -1,9 +1,11 @@
 <?php
 session_start();
 include_once "../class/vendas.class.php";
-include_once "../class/filmes_has_venda.class.php";
-include_once "../class/filmes_has_vendaDAO.class.php";
+include_once "../class/filme_has_venda.class.php";
+include_once "../class/filme_has_vendaDAO.class.php";
 include_once "../class/vendasDAO.class.php";
+include_once "../class/filmesDAO.class.php"; 
+
 $objVendas = new Vendas();
 $objVendas->setId($_SESSION["id"]);
 $objVendas->setData_venda(date("y-m-d"));
@@ -16,17 +18,17 @@ if ($retorno > 0) {
     echo "venda inserida";
 
     $objVP = new filmes_has_produtos();
-    $objVPDAO = new filme_has_venda_produtoDAO();
+    $objVPDAO = new filmes_has_vendaDAO();
     $objVP->setId_filmes($retorno);
 
-    foreach ($_SESSION["Carrinho"] as $linha) {
+    foreach ($_SESSION["carrinho"] as $linha) {
         $objVP->setId_filmes($linha);
         //pedir para o banco o preco 
 
-        $objfilme = $objfilmesDAO->retornarUm($linha);
-        $objVP->getPreco($objfilme["preco"]);
+        $objfilme = $objVPDAO->retornarUm($linha);
+        $objVP->setPreco($objfilme["preco"]);
 
-        $objVPDAO->inserir($objVP);
+        $objVPDAO->inserir($objVPDAO);
     }
 } else {
     echo "erro";

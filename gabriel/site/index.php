@@ -1,4 +1,20 @@
 <?php
+
+session_start();
+if(isset($_GET["carrinho"])){
+    if(!isset($_SESSION["carrinho"])){
+        $_SESSION["carrinho"] = [];
+    }
+    if(!in_array($_GET["id"], $_SESSION["carrinho"])){
+        array_push($_SESSION["carrinho"], $_GET["id"]);
+        echo "<h2>Adicionado ao carrinho</h2>";
+    }
+    else{
+        echo "<h2>Produto já adicionado ao carrinho anteriormente</h2>";
+    }
+    print_r($_SESSION["carrinho"]);
+
+}
 include_once "../class/categorias.class.php";
 include_once "../class/categoriasDAO.class.php";
 include_once "../class/filmes.class.php";
@@ -17,6 +33,7 @@ $categorias = $objcategoriasDAO->listar();
         echo "<li><a href = 'listar.php?id=". $linha["id_categoria"] ."'>" . $linha["nome"] . "</a></li>";
     }
     ?>
+    <li><a href="carrinho.php">Carrinho de Compras</a></li>
 </ul>
 <?php
 $objfilmesDAO = new filmesDAO();
@@ -39,6 +56,10 @@ if ($retorno && is_array($retorno)) {
     if($retornoimg>0)
     echo "<img src='../imagens/".$retornoimg["nome"]."'/>";
      ?>
+        <a href="?id=<?=$linha['id_filmes'];?>&carrinho">
+        add ao carrinho
+     </a>
+
 </div>
         <?php
 
