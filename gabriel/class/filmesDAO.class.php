@@ -1,4 +1,5 @@
 <?php
+
 include_once "clientes.class.php"; 
 include_once "filmes.class.php";
 
@@ -106,6 +107,20 @@ class filmesDAO
         $sql->bindValue(":id_filmes", $filmes->getId_filmes());
         
         return $sql->execute();
+    }
+
+    // ✅ Novo método para busca filtrada por nome ou descrição
+    public function buscarFiltrado($termo)
+    {
+        $sql = $this->conexao->prepare("
+            SELECT filmes.*, categorias.nome as categorias
+            FROM filmes
+            INNER JOIN categorias ON filmes.genero = categorias.id_categoria
+            WHERE filmes.nome LIKE :termo OR filmes.descricao LIKE :termo
+        ");
+        $sql->bindValue(":termo", "%" . $termo . "%");
+        $sql->execute();
+        return $sql->fetchAll();
     }
 }
 ?>

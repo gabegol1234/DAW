@@ -3,10 +3,41 @@ include_once "../class/filmes.class.php";
 include_once "../class/filmesDAO.class.php";
 include_once "../class/img.class.php";
 include_once "../class/imgDAO.class.php";
+include_once "../class/categorias.class.php";
+include_once "../class/categoriasDAO.class.php";
 
 $objfilmesDAO = new filmesDAO();
 $objimagensDAO = new imgDAO();
-$retorno = $objfilmesDAO->listar();
+$objcategoriasDAO = new categoriasDAO();
+
+// Captura busca e categoria selecionada
+$busca = isset($_GET['q']) ? trim($_GET['q']) : "";
+$categoria = isset($_GET['categoria']) ? intval($_GET['categoria']) : 0;
+
+// Se tiver busca ou categoria, filtra; senão, lista todos
+if ($busca != "" || $categoria > 0) {
+    $retorno = $objfilmesDAO->buscarFiltrado($busca, $categoria);
+} else {
+    $retorno = $objfilmesDAO->listar();
+}
+
+// Lista categorias para o select
+$listaCategorias = $objcategoriasDAO->listar();
+
+// Formulário de busca + filtro
+echo '<form method="GET" action="">
+        <input type="text" name="q" placeholder="Buscar produto..." value="'.htmlspecialchars($busca).'">
+        <select name="categoria">
+            <option value="0">Todas as categorias</option>';
+            if ($listaCategorias && is_array($listaCategorias)) {
+                foreach ($listaCategorias as $cat) {
+                    $sel = ($categoria == $cat["id_categoria"]) ? "selected" : "";
+                    echo "<option value='{$cat["id_categoria"]}' $sel>{$cat["nome"]}</option>";
+                }
+            }
+echo '  </select>
+        <button type="submit">Filtrar</button>
+      </form><br>';
 
 if (isset($_POST["editarOK"])) {
     echo "<h2>Editado com sucesso!</h2>";
@@ -24,42 +55,29 @@ if (isset($_POST["ofertaErro"])) {
 
 echo "<a href='inserir.php'>Inserir novo produto</a><br>";
 
-/*echo "<pre>";
-print_r($retorno);
-echo "</pre>";*/
-
-// Verifica se a variável $retorno está corretamente preenchida
+// Listagem de produtos
 if ($retorno && is_array($retorno)) {
     foreach ($retorno as $linha) {
 
         //mostrar img do produto
         $retornoimg = $objimagensDAO->retornarUm($linha["id_filmes"]);
         if($retornoimg>0) 
-        echo "<img src='../imagens/".$retornoimg["nome"]."'>";
+            echo "<img src='../imagens/".$retornoimg["nome"]."'>";
 
-        // Verifica se as chaves 'genero' e 'nome' existem no array
         if (isset($linha["genero"]) && isset($linha["nome"])) {
             echo "Gênero: " . calcularGenero($linha["genero"]);
             echo "<br/>Nome: " . $linha["nome"];
 
-            // Exibir classificação etária, se existir
             if (isset($linha["classificacao_etaria"])) {
                 echo "<br/>Classificação Etária: " . $linha["classificacao_etaria"];
             }
-
-            // Exibir ano de lançamento, se existir
             if (isset($linha["ano_lancamento"])) {
                 echo "<br/>Ano de Lançamento: " . $linha["ano_lancamento"];
             }
-
-            
-            // Exibir ano de trilha sonora, se existir
             if (isset($linha["trilha_sonora"])) {
-                echo "<br/>trilha_sonora: " . $linha["trilha_sonora"];
+                echo "<br/>Trilha sonora: " . $linha["trilha_sonora"];
             }
 
-
-            // Verificar se o campo 'em_oferta' está definido e se o produto está em oferta
             if (isset($linha["em_oferta"]) && $linha["em_oferta"] == 1) {
                 echo "<br/>Produto em oferta!";
             } else {
@@ -76,3 +94,4 @@ if ($retorno && is_array($retorno)) {
 } else {
     echo "<p>Nenhum produto encontrado.</p>";
 }
+?>
