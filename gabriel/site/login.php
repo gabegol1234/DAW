@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="login_ok.php"method="post">
+    <form action="login_ok.php"method="POST">
     usuario: <input type="text" name="usuario">
     <br>
     Senha: <input type="Senha" name="senha">

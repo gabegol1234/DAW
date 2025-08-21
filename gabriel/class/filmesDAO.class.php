@@ -6,14 +6,14 @@ include_once "filmes.class.php";
 function calcularGenero($idGenero) {
     $con = mysqli_connect("localhost", "root", "", "gabriel_ecommerce");
     
-    $nomeGenero = mysqli_query($con, "SELECT nome FROM categorias WHERE id_categoria = '".$idGenero."'");
+    $nomeGenero = mysqli_query($con, "SELECT nome FROM categorias WHERE idCategoria = '".$idGenero."'");
 
     while($cadaNome = mysqli_fetch_assoc($nomeGenero)) {
         return $cadaNome['nome'];
     }
 }
 
-class filmesDAO
+class FilmesDAO
 {
    private $conexao;
 
@@ -28,7 +28,7 @@ class filmesDAO
 
     public function listar($complemento= "")
     {
-        $sql = $this->conexao->prepare("SELECT filmes.*,categorias.nome as categorias FROM filmes INNER JOIN categorias ON filmes.genero=categorias.id_categoria ".$complemento);
+        $sql = $this->conexao->prepare("SELECT filmes.*, categorias.nome as categorias FROM filmes INNER JOIN categorias ON filmes.genero = categorias.idCategoria " . $complemento);
         $sql->execute();
         return $sql->fetchAll();
     }
@@ -37,74 +37,74 @@ class filmesDAO
     {
         $sql = $this->conexao->prepare(
             "INSERT INTO filmes
-            (nome,genero,classificacao_etaria,ano_lancamento,descricao,duracao,trilha_sonora)
+            (nome, genero, classificacaoEtaria, anoLancamento, descricao, duracao, trilhaSonora)
             VALUES
-            (:nome,:genero,:classificacao_etaria,:ano_lancamento,:descricao,:duracao,:trilha_sonora)"
+            (:nome, :genero, :classificacaoEtaria, :anoLancamento, :descricao, :duracao, :trilhaSonora)"
         );
         $sql->bindValue(":nome", $obj->getNome());
         $sql->bindValue(":genero", $obj->getGenero());
-        $sql->bindValue(":classificacao_etaria", $obj->getClassificacao_etaria());
-        $sql->bindValue(":ano_lancamento", $obj->getAno_lancamento());
+        $sql->bindValue(":classificacaoEtaria", $obj->getClassificacaoEtaria());
+        $sql->bindValue(":anoLancamento", $obj->getAnoLancamento());
         $sql->bindValue(":descricao", $obj->getDescricao());
         $sql->bindValue(":duracao", $obj->getDuracao());
-        $sql->bindValue(":trilha_sonora", $obj->getTrilha_sonora());
+        $sql->bindValue(":trilhaSonora", $obj->getTrilhaSonora());
         $sql->execute();
-        return $this->conexao->lastInsertId();
 
+        return $this->conexao->lastInsertId();
     }
 
-    public function excluir($id)
+    public function excluir($idFilme)
     {
-        $sql = $this->conexao->prepare("DELETE FROM filmes WHERE id_filmes = :id");
-        $sql->bindValue(":id", $id);
+        $sql = $this->conexao->prepare("DELETE FROM filmes WHERE idFilme = :idFilme");
+        $sql->bindValue(":idFilme", $idFilme);
         return $sql->execute();
     }
 
-    public function retornarUm($id_filmes)
+    public function retornarUm($idFilme)
     {
-        $sql = $this->conexao->prepare("SELECT * FROM filmes WHERE id_filmes = :id");
-        $sql->bindValue(":id", $id_filmes);
+        $sql = $this->conexao->prepare("SELECT * FROM filmes WHERE idFilme = :idFilme");
+        $sql->bindValue(":idFilme", $idFilme);
         $sql->execute();
         return $sql->fetch();
     }
 
-    public function editar(filmes $filmes)
+    public function editar(Filmes $filmes)
     {
         $sql = $this->conexao->prepare("
             UPDATE filmes SET
             nome = :nome,
             genero = :genero,
-            classificacao_etaria = :classificacao_etaria,
-            ano_lancamento = :ano_lancamento,
+            classificacaoEtaria = :classificacaoEtaria,
+            anoLancamento = :anoLancamento,
             descricao = :descricao,
             duracao = :duracao,
-            trilha_sonora = :trilha_sonora
-            WHERE id_filmes = :id_filmes
+            trilhaSonora = :trilhaSonora
+            WHERE idFilme = :idFilme
         ");
 
-        $sql->bindValue(":id_filmes", $filmes->getId_filmes());
+        $sql->bindValue(":idFilme", $filmes->getIdFilme());
         $sql->bindValue(":nome", $filmes->getNome());
         $sql->bindValue(":genero", $filmes->getGenero());
-        $sql->bindValue(":classificacao_etaria", $filmes->getClassificacao_etaria());
-        $sql->bindValue(":ano_lancamento", $filmes->getAno_lancamento());
+        $sql->bindValue(":classificacaoEtaria", $filmes->getClassificacaoEtaria());
+        $sql->bindValue(":anoLancamento", $filmes->getAnoLancamento());
         $sql->bindValue(":descricao", $filmes->getDescricao());
         $sql->bindValue(":duracao", $filmes->getDuracao());
-        $sql->bindValue(":trilha_sonora", $filmes->getTrilha_sonora());
+        $sql->bindValue(":trilhaSonora", $filmes->getTrilhaSonora());
 
         return $sql->execute();
     }
 
     // ✅ Adicionado o método ofertar
-    public function ofertar(filmes $filmes)
+    public function ofertar(Filmes $filmes)
     {
         $sql = $this->conexao->prepare("
             UPDATE filmes SET
             ofertar = :ofertar
-            WHERE id_filmes = :id_filmes
+            WHERE idFilme = :idFilme
         ");
         
         $sql->bindValue(":ofertar", $filmes->getOfertar());
-        $sql->bindValue(":id_filmes", $filmes->getId_filmes());
+        $sql->bindValue(":idFilme", $filmes->getIdFilme());
         
         return $sql->execute();
     }
@@ -115,7 +115,7 @@ class filmesDAO
         $sql = $this->conexao->prepare("
             SELECT filmes.*, categorias.nome as categorias
             FROM filmes
-            INNER JOIN categorias ON filmes.genero = categorias.id_categoria
+            INNER JOIN categorias ON filmes.genero = categorias.idCategoria
             WHERE filmes.nome LIKE :termo OR filmes.descricao LIKE :termo
         ");
         $sql->bindValue(":termo", "%" . $termo . "%");
@@ -123,4 +123,3 @@ class filmesDAO
         return $sql->fetchAll();
     }
 }
-?>

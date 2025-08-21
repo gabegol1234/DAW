@@ -27,17 +27,17 @@
                 $categorias = mysqli_query($con, "SELECT * FROM categorias");
 
                 while($cadaCategoria = mysqli_fetch_assoc($categorias)) {
-                    echo "<option value='".$cadaCategoria['id_categoria']."'>".$cadaCategoria['nome']."</option>";
+                    echo "<option value='".$cadaCategoria['idCategoria']."'>".$cadaCategoria['nome']."</option>";
                 }
                 
             ?>
         </select>
         <br>
-        Classificação etária:
-        <input type="text" name="classificacao_etaria"/>
+        ClassificaçãoEtária:
+        <input type="text" name="classificacaoEtaria"/>
         <br>
-        ano lançamento:
-        <input type="number" name="ano_lancamento"/>
+        anoLançamento:
+        <input type="number" name="anoLancamento"/>
         <br>
         Descrição:
         <input type="text" name="descricao"/>
@@ -45,8 +45,8 @@
         Duração:
         <input type="text" name="duracao"/>
         <br>
-        trilha sonora:
-        <input type="text" name="trilha_sonora"/>
+        trilhaSonora:
+        <input type="text" name="trilhaSonora"/>
         <br>
         <input type="file" name="imagem[]" multiple />
         <button type="submit">enviar</button>

@@ -24,7 +24,7 @@ class clientesDAO
         $sql->execute();
         return $sql->fetchAll();
     }
-    public function inserir(clientes $obj)
+    public function inserir(Clientes $obj)
     {
 
         $query = mysqli_query($this->con, "SELECT * FROM clientes WHERE cpf = '".$obj->getCpf()."'");
@@ -43,30 +43,30 @@ class clientesDAO
             (:nome,:usuario,:senha,:contato,:cpf)"
         );
         $sql->bindValue(":nome", $obj->getNome());
-        $sql->bindValue(":usuario", $obj->getusuario());
+        $sql->bindValue(":usuario", $obj->getUsuario());
         $sql->bindValue(":senha", $obj->getSenha());
         $sql->bindValue(":contato", $obj->getContato());
         $sql->bindValue(":cpf", $obj->getCpf());
         return $sql->execute();
     }
-    public function excluir($id)
+    public function excluir($idCliente)
     {
         $sql = $this->conexao->prepare("
-        DELETE FROM clientes WHERE idclientes = :id
+        DELETE FROM clientes WHERE idCliente = :idCliente
         ");
-        $sql->bindValue(":id", $id);
+        $sql->bindValue(":idCliente", $idCliente);
         return $sql->execute();
     }
-    public function retornarUm($id)
+    public function retornarUm($idCliente)
     {
         $sql = $this->conexao->prepare("
-        SELECT * FROM clientes WHERE idclientes=:id
+        SELECT * FROM clientes WHERE idCliente = :idCliente
         ");
-        $sql->bindValue(":id", $id);
+        $sql->bindValue(":idCliente", $idCliente);
         $sql->execute();
         return $sql->fetch();
     }
-    public function login(clientes $clientes){
+    public function login(Clientes $clientes){
         $sql = $this->conexao->prepare("
         SELECT * FROM clientes WHERE usuario = :usuario
         ");
@@ -78,32 +78,30 @@ class clientesDAO
                 {
                     return $retorno; //tudo ok! faça o login
                 }
-
-
             }
             return 1;//senha incorreta
         }
-        else{
+        else {
             return 2; //usuario  nao cadastrado
         }
     }
-    public function editar(clientes $clientes){
+    public function editar(Clientes $clientes){
 
-        $query = mysqli_query($this->con, "SELECT * FROM clientes WHERE cpf = '".$clientes->getCpf()."' AND idclientes != '".$clientes->getIdclientes()."'");
+        $query = mysqli_query($this->con, "SELECT * FROM clientes WHERE cpf = '".$clientes->getCpf()."' AND idCliente != '".$clientes->getIdCliente()."'");
         if(mysqli_fetch_assoc($query)) {
             return 2;
         }
-        $query = mysqli_query($this->con, "SELECT * FROM clientes WHERE usuario = '".$clientes->getUsuario()."' AND idclientes != '".$clientes->getIdclientes()."'");
+        $query = mysqli_query($this->con, "SELECT * FROM clientes WHERE usuario = '".$clientes->getUsuario()."' AND idCliente != '".$clientes->getIdCliente()."'");
         if(mysqli_fetch_assoc($query)) {
             return 3;
         }        
 
         $sql= $this->conexao->prepare("
         UPDATE clientes SET
-        nome = :nome, usuario= :usuario, senha =:senha, cpf = :cpf, contato = :contato
-        WHERE idclientes =:idclientes
+        nome = :nome, usuario = :usuario, senha =: senha, cpf = :cpf, contato = :contato
+        WHERE idCliente = :idCliente
         ");
-        $sql->bindValue(":idclientes", $clientes->getIdclientes());
+        $sql->bindValue(":idCliente", $clientes->getIdCliente());
         $sql->bindValue(":contato", $clientes->getContato());
         $sql->bindValue(":senha", $clientes->getSenha());
         $sql->bindValue(":nome", $clientes->getNome());

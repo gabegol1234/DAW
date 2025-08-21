@@ -3,11 +3,11 @@ session_start();
 
 include_once "../class/filmes.class.php";
 include_once "../class/filmesDAO.class.php";
-include_once "../class/img.class.php";
-include_once "../class/imgDAO.class.php";
+include_once "../class/imagens.class.php";
+include_once "../class/imagensDAO.class.php";
 
-$objfilmesDAO = new filmesDAO();
-$objimagensDAO = new imgDAO();
+$objfilmesDAO = new FilmesDAO();
+$objimagensDAO = new ImagensDAO();
 
 $carrinho = $_SESSION['carrinho'] ?? [];
 

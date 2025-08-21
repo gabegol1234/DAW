@@ -1,22 +1,21 @@
 <?php
-    class filmes{
-        private $id_filmes;
+    class Filmes {
+        private $idFilme;
         private $nome;
         private $preco;
         private $genero;
-        private $classificacao_etaria;
-        private $ano_lancamento;
+        private $classificacaoEtaria;
+        private $anoLancamento;
         private $descricao;
         private $duracao;
-        private $trilha_sonora;
+        private $trilhaSonora;
         private $ofertar;
-        
 
-        public function getId_filmes(){
-            return $this->id_filmes;
+        public function getIdFilme(){
+            return $this->idFilme;
         }
-        public function setId_filmes($valor){
-            $this->id_filmes = $valor;
+        public function setIdFilme($valor){
+            $this->idFilme = $valor;
         }
         public function getNome(){
             return $this->nome;
@@ -36,17 +35,17 @@
         public function setGenero($valor){
             $this->genero = $valor;
         }
-        public function getClassificacao_etaria(){
-            return $this->classificacao_etaria;
+        public function getClassificacaoEtaria(){
+            return $this->classificacaoEtaria;
         }
-        public function setClassificacao_etaria($valor){
-            $this->classificacao_etaria = $valor;
+        public function setClassificacaoEtaria($valor){
+            $this->classificacaoEtaria = $valor;
         }
-        public function getAno_lancamento(){
-            return $this->ano_lancamento;
+        public function getAnoLancamento(){
+            return $this->anoLancamento;
         }
-        public function setAno_lancamento($valor){
-            $this->ano_lancamento= $valor;
+        public function setAnoLancamento($valor){
+            $this->anoLancamento= $valor;
         }
         public function getDescricao(){
             return $this->descricao;
@@ -58,24 +57,18 @@
             return $this->duracao;
         }
         public function setDuracao($valor){
-            $this->duracao= $valor;
+            $this->duracao = $valor;
         }
-        public function getTrilha_sonora(){
-            return $this->trilha_sonora;
+        public function getTrilhaSonora(){
+            return $this->trilhaSonora;
         }
-        public function setTrilha_sonora($valor){
-            $this->trilha_sonora= $valor;
+        public function setTrilhaSonora($valor){
+            $this->trilhaSonora = $valor;
         }
         public function getOfertar(){
             return $this->ofertar;
         }
         public function setOfertar($valor){
-            $this->ofertar= $valor;
+            $this->ofertar = $valor;
         }
-          
-
-
-        
     }
-
-?>

@@ -2,7 +2,7 @@
 
 include_once "vendas.class.php";
 
-class VendaDAO
+class VendasDAO
 {
     private $conexao;
 
@@ -20,23 +20,21 @@ class VendaDAO
         $sql = $this->conexao->prepare("SELECT * FROM vendas");
         $sql->execute();
         return $this->conexao->lastInsertId();
-
     }
 
     public function inserir(Vendas $obj)
     {
         $sql = $this->conexao->prepare("
-            INSERT INTO vendas (id,status_venda,pagamento,data_venda, entrega)
-            VALUES (:id_cliente, :status_venda, :forma_pagamento, :data_venda, :entrega)
+            INSERT INTO vendas (idCliente, statusVenda, pagamento, dataVenda, entrega)
+            VALUES (:idCliente, :statusVenda, :pagamento, :dataVenda, :entrega)
         ");
-        $sql->bindValue(":id_cliente", $obj->getId());
-        $sql->bindValue(":status_venda", $obj->getStatus_venda());
-        $sql->bindValue(":forma_pagamento", $obj->getPagamento());
-        $sql->bindValue(":data_venda", $obj->getData_venda());
+        $sql->bindValue(":idCliente", $obj->getIdCliente());
+        $sql->bindValue(":statusVenda", $obj->getStatusVenda());
+        $sql->bindValue(":pagamento", $obj->getPagamento());
+        $sql->bindValue(":dataVenda", $obj->getDataVenda());
         $sql->bindValue(":entrega", $obj->getEntrega());
         $sql->execute();
+
         return $this->conexao->lastInsertId();
     }
-
 }
-?>

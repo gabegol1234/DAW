@@ -3,8 +3,8 @@
 //print_r($_POST);
 include_once "../class/filmes.class.php";
 include_once "../class/filmesDAO.class.php";
-include_once "../class/img.class.php";
-include_once "../class/imgDAO.class.php";
+include_once "../class/imagens.class.php";
+include_once "../class/imagensDAO.class.php";
 
 
 
@@ -12,11 +12,11 @@ $obj = new filmes();
 $obj->setNome($_POST["nome"]);
 $obj->setPreco($_POST["preco"]);
 $obj->setGenero($_POST["genero"]);
-$obj->setClassificacao_etaria($_POST["classificacao_etaria"]);
-$obj->setAno_lancamento($_POST["ano_lancamento"]);
+$obj->setClassificacaoEtaria($_POST["classificacaoEtaria"]);
+$obj->setAnoLancamento($_POST["anoLancamento"]);
 $obj->setDescricao($_POST["descricao"]);
 $obj->setDuracao($_POST["duracao"]);
-$obj->setTrilha_sonora($_POST["trilha_sonora"]);
+$obj->setTrilhaSonora($_POST["trilhaSonora"]);
 
 $objDAO = new filmesDAO();
 $retorno = $objDAO->inserir($obj);
@@ -24,9 +24,9 @@ $retorno = $objDAO->inserir($obj);
 
 
 
-$obj = new img();
-$obj->setId_filmes($retorno);
-$objDAO = new imgDAO();
+$obj = new imagens();
+$obj->setIdFilme($retorno);
+$objDAO = new imagensDAO();
 
 for($i=0; $i<count($_FILES["imagem"]["name"]); $i++){
     echo "oiiii";

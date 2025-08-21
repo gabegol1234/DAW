@@ -5,11 +5,11 @@ include_once "../class/clientes.class.php";
 include_once "../class/clientesDAO.class.php";
 
 
-$obj = new clientes();
+$obj = new Clientes();
 $obj->setUsuario($_POST["usuario"]);
 $obj->setSenha($_POST["senha"]);
 
-$objDAO = new clientesDAO();
+$objDAO = new ClientesDAO();
 $retorno = $objDAO->login($obj);
 
 if($retorno == 2)
@@ -18,10 +18,8 @@ else if($retorno == 1)
     echo "senha incorreta";
 else{
     session_start();
-    $_SESSION["id"] = $retorno["id"];
+    $_SESSION["idCliente"] = $retorno["idCliente"];
     $_SESSION["login"] = true;
     header("location:index.php?loginok");
-
 }
-?>
 

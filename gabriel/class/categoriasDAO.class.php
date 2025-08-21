@@ -23,48 +23,43 @@ class categoriasDAO
         return $sql->fetchAll();
     }
 
-    public function inserir(categoria $obj)
+    public function inserir(Categorias $obj)
     {
         $sql = $this->conexao->prepare(
-            "INSERT INTO categorias
-            (nome)
-            VALUES
-            ( :nome)"
+            "INSERT INTO categorias(nome) VALUES (:nome)"
         );
-        $sql->bindValue(":nome", $obj->getnome());
-
+        $sql->bindValue(":nome", $obj->getNome());
         return $sql->execute();
     }
 
-    public function excluir($id)
+    public function excluir($idCategoria)
     {
         $sql = $this->conexao->prepare("
-        DELETE FROM categorias WHERE id_categoria = :id_categoria
+        DELETE FROM categorias WHERE idCategoria = :idCategoria
         ");
-        $sql->bindValue(":id_categoria",  $id);
+        $sql->bindValue(":idCategoria",  $idCategoria);
         return $sql->execute();
     }
 
-    public function retornarUm($id)
+    public function retornarUm($idCategoria)
     {
         $sql = $this->conexao->prepare("
-        SELECT * FROM categorias WHERE id_categoria=:id
+            SELECT * FROM categorias WHERE idCategoria = :idCategoria
         ");
-        $sql->bindValue(":id", $id);
+        $sql->bindValue(":idCategoria", $idCategoria);
         $sql->execute();
         return $sql->fetch();
     }
 
-    public function editar(categoria $categoria)
+    public function editar(Categorias $obj)
     {
         $sql = $this->conexao->prepare("
-        UPDATE categorias SET
-        nome = :nome
-        WHERE id_categoria = :id_categorias
+            UPDATE categorias SET
+            nome = :nome
+            WHERE idCategoria = :idCategoria
         ");
-        $sql->bindValue(":id_categorias", $categoria->getId_categoria());
-        $sql->bindValue(":nome", $categoria->getNome());
+        $sql->bindValue(":idCategoria", $obj->getIdCategoria());
+        $sql->bindValue(":nome", $obj->getNome());
         return $sql->execute();
     }
 }
-?>

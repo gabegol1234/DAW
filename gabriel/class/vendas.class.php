@@ -1,53 +1,43 @@
 <?php
 class Vendas
 {
-    private $id;
-
-    private $email;
-
-    private $data_venda;
-    
-    private $status_venda;
-
+    private $idVenda;
+    private $idCliente;
+    private $dataVenda;
+    private $statusVenda;
     private $pagamento;
-
     private $entrega;
 
-    public function getId()
+    public function getIdVenda()
     {
-        return $this->id;
+        return $this->idVenda;
     }
-    public function setId($valor)
+    public function setIdVenda($valor)
     {
-        $this->id = $valor;
+        $this->idVenda = $valor;
     }
-
-    public function getEmail()
+    public function getIdCliente() {
+        return $this->idCliente;
+    }
+    public function setIdCliente($idCliente) {
+        $this->idCliente = $idCliente;
+    }
+    public function getDataVenda()
     {
-        return $this->email;
+        return $this->dataVenda;
     }
-    public function setEmail($valor)
+    public function setDataVenda($valor)
     {
-        $this->email = $valor;
+        $this->dataVenda = $valor;
     }
-
-    public function getData_venda()
+    public function getStatusVenda()
     {
-        return $this->data_venda;
+        return $this->statusVenda;
     }
-    public function setData_venda($valor)
+    public function setStatusVenda($valor)
     {
-        $this->data_venda = $valor;
+        $this->statusVenda = $valor;
     }
-    public function getStatus_venda()
-    {
-        return $this->status_venda;
-    }
-    public function setStatus_venda($valor)
-    {
-        $this->status_venda = $valor;
-    }
-
     public function getPagamento()
     {
         return $this->pagamento;
@@ -56,7 +46,6 @@ class Vendas
     {
         $this->pagamento = $valor;
     }
-
     public function getEntrega()
     {
         return $this->entrega;
@@ -65,6 +54,4 @@ class Vendas
     {
         $this->entrega = $valor;
     }
-
 }
-?>

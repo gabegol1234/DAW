@@ -1,14 +1,14 @@
 <?php
 include_once "../class/filmes.class.php";
 include_once "../class/filmesDAO.class.php";
-include_once "../class/img.class.php";
-include_once "../class/imgDAO.class.php";
+include_once "../class/imagens.class.php";
+include_once "../class/imagensDAO.class.php";
 include_once "../class/categorias.class.php";
 include_once "../class/categoriasDAO.class.php";
 
-$objfilmesDAO = new filmesDAO();
-$objimagensDAO = new imgDAO();
-$objcategoriasDAO = new categoriasDAO();
+$objfilmesDAO = new FilmesDAO();
+$objimagensDAO = new ImagensDAO();
+$objcategoriasDAO = new CategoriasDAO();
 
 // Captura busca e categoria selecionada
 $busca = isset($_GET['q']) ? trim($_GET['q']) : "";
@@ -60,7 +60,7 @@ if ($retorno && is_array($retorno)) {
     foreach ($retorno as $linha) {
 
         //mostrar img do produto
-        $retornoimg = $objimagensDAO->retornarUm($linha["id_filmes"]);
+        $retornoimg = $objimagensDAO->retornarUm($linha["idFilme"]);
         if($retornoimg>0) 
             echo "<img src='../imagens/".$retornoimg["nome"]."'>";
 
@@ -81,11 +81,11 @@ if ($retorno && is_array($retorno)) {
             if (isset($linha["em_oferta"]) && $linha["em_oferta"] == 1) {
                 echo "<br/>Produto em oferta!";
             } else {
-                echo "<br/><a href='ofertar.php?id=" . $linha["id_filmes"] . "'>Colocar em oferta</a>";
+                echo "<br/><a href='ofertar.php?idFilme=" . $linha["idFilme"] . "'>Colocar em oferta</a>";
             }
 
-            echo "<br/><a href='editar.php?id=" . $linha["id_filmes"] . "'>Editar</a>";
-            echo "<a href='excluir.php?id_filmes=" . $linha["id_filmes"] . "'>Excluir</a>";
+            echo "<br/><a href='editar.php?idFilme=" . $linha["idFilme"] . "'>Editar</a>";
+            echo "<a href='excluir.php?idFilme=" . $linha["idFilme"] . "'>Excluir</a>";
             echo "<br/><br/>";
         } else {
             echo "<p>Erro: Dados incompletos para o produto.</p>";

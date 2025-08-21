@@ -1,36 +1,36 @@
 <?php
 session_start();
 include_once "../class/vendas.class.php";
-include_once "../class/filme_has_venda.class.php";
-include_once "../class/filme_has_vendaDAO.class.php";
+include_once "../class/filmes_has_vendas.class.php";
+include_once "../class/filmes_has_vendasDAO.class.php";
 include_once "../class/vendasDAO.class.php";
 include_once "../class/filmesDAO.class.php"; 
 
 $objVendas = new Vendas();
-$objVendas->setId($_SESSION["id"]);
-$objVendas->setData_venda(date("y-m-d"));
-$objVendas->setpagamento($_POST["pagamento"]);
-$objVendas->setEntrega($_POST["endereco"]);
-$objVendas->setStatus_venda("nova compra");
-$objDAO = new VendaDAO();
-$retorno = $objDAO->inserir($objVendas);
-if ($retorno > 0) {
+$objVendas->setIdCliente($_SESSION["idCliente"]);
+$objVendas->setDataVenda(date("y-m-d"));
+$objVendas->setPagamento($_POST["pagamento"]);
+$objVendas->setEntrega($_POST["entrega"]);
+$objVendas->setStatusVenda("nova compra");
+
+$objVendasDAO = new VendasDAO();
+$idUltimaVenda = $objVendasDAO->inserir($objVendas);
+if ($idUltimaVenda > 0) {
     echo "venda inserida";
 
-    $objVP = new filmes_has_produtos();
-    $objVPDAO = new filmes_has_vendaDAO();
-    $objVP->setId_filmes($retorno);
+    $objFilmesHasVendas = new filmes_has_vendas();
+    $objFilmesHasVendasDAO = new filmes_has_vendasDAO();
 
-    foreach ($_SESSION["carrinho"] as $linha) {
-        $objVP->setId_filmes($linha);
-        //pedir para o banco o preco 
+    foreach($_SESSION["carrinho"] as $cadaProdutoDoCarrinho) {
 
-        $objfilme = $objVPDAO->retornarUm($linha);
-        $objVP->setPreco($objfilme["preco"]);
+        $objFilmesHasVendas->setIdFilme($cadaProdutoDoCarrinho);
+        $objFilmesHasVendas->setIdVenda($idUltimaVenda);
 
-        $objVPDAO->inserir($objVPDAO);
+        $objFilmesHasVendasDAO->inserir($objFilmesHasVendas);
+        
+        // LINHA ABAIXO PARA NOTA FISCAL
+        //$objfilme = $objFilmesHasVendasDAO->retornarUm($cadaProdutoDoCarrinho);
     }
 } else {
     echo "erro";
 }
-?>

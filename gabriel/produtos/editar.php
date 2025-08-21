@@ -1,13 +1,14 @@
 <?php
 include_once "../class/filmes.class.php";
 include_once "../class/filmesDAO.class.php";
-$id = $_GET["id"];
-$objDAO = new filmesDAO();
-$retorno = $objDAO->retornarUm($id);
+
+$idFilme = $_GET["idFilme"];
+$objFilmesDAO = new FilmesDAO();
+$retorno = $objFilmesDAO->retornarUm($idFilme);
 
 include_once "../class/categorias.class.php";
 include_once "../class/categoriasDAO.class.php";
-$objcategorias = new categoriasDAO();
+$objcategorias = new CategoriasDAO();
 $categorias = $objcategorias->listar(); 
 ?>
 
@@ -22,7 +23,7 @@ $categorias = $objcategorias->listar();
 
 <body>
     <form action="editar_ok.php" method="post">
-        <input type="hidden" name="id_filmes" value="<?= $retorno["id_filmes"] ?>" />
+        <input type="hidden" name="idFilme" value="<?= $retorno["idFilme"] ?>" />
         
         Nome:
         <input type="text" name="nome" value="<?= $retorno["nome"] ?>" />
@@ -33,25 +34,25 @@ $categorias = $objcategorias->listar();
         <br>
 
         classificação_etaria:
-        <input type="text" name="classificacao_etaria" value="<?= $retorno["classificacao_etaria"] ?>" />
+        <input type="text" name="classificacaoEtaria" value="<?= $retorno["classificacaoEtaria"] ?>" />
         <br>
 
         trilha_sonora:
-        <input type="text" name="trilha_sonora" value="<?= $retorno["trilha_sonora"] ?>" />
+        <input type="text" name="trilhaSonora" value="<?= $retorno["trilhaSonora"] ?>" />
         <br>
 
        
         ano lançamento:
-        <input type="date" name="ano_lancamento" value="<?= $retorno["ano_lancamento"] ?>" />
+        <input type="date" name="anoLancamento" value="<?= $retorno["anoLancamento"] ?>" />
         <br>
         Genero:
         <select name="genero">
             <?php
             foreach($categorias as $linha){
-                if($linha["id"] == $retorno["id_categoria"])
-                echo "<option selected value='".$linha["id"]."'>".$linha['nome']."</option>";
+                if($linha["id"] == $retorno["idCategoria"])
+                echo "<option selected value='".$linha["idCategoria"]."'>".$linha['nome']."</option>";
                 else
-                    echo"<option value='".$linha["id"]."'>".$linha["nome"]."</option>";
+                    echo"<option value='".$linha["idCategoria"]."'>".$linha["nome"]."</option>";
             }
             ?>
       

@@ -1,25 +1,18 @@
 <?php
-    class categoria{
-        private $id_categoria;
+    class Categorias {
+        private $idCategoria;
         private $nome;
-       
-        
 
-        public function getId_categoria (){
-            return $this->id_categoria;
+        public function getIdCategoria(){
+            return $this->idCategoria;
         }
-        public function setId_categoria($valor){
-            $this->id_categoria = $valor;
+        public function setIdCategoria($valor){
+            $this->idCategoria = $valor;
         }
-        public function getnome(){
+        public function getNome(){
             return $this->nome;
         }
-        public function setnome($valor){
+        public function setNome($valor){
             $this->nome = $valor;
         }
-        
-
-        
     }
-
-?>

@@ -19,26 +19,27 @@ if (!isset($_SESSION["carrinho"])) {
             <?php
             include_once "../class/filmes.class.php";
             include_once "../class/filmesDAO.class.php";
-            $objProdutosDAO = new filmesDAO();
+            $objProdutosDAO = new FilmesDAO();
 
             foreach ($_SESSION["carrinho"] as $id) {
                 $retorno = $objProdutosDAO->retornarUm($id);
                 ?>
                 <tr>
                     <td>
-                        <?= $retorno["nome"]; ?>
+                        <?=$retorno["nome"]; ?>
                     </td>
                     <td>
-                        <?= $retorno["preco"]; ?>
+                        <?=$retorno["preco"]; ?>
                     </td>
                     <td>
-                        <input type="number" name="quantidade<?= $id; ?>" id="">
-                    </td>
+                        <input type="number" name="quantidade<?= $id; ?>" value="1" min="1">
                     </td>
                 </tr>
                 <?php
-
             }
+            
+                
+            
             ?>
         </tbody>
     </table>

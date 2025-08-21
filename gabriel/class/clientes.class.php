@@ -1,17 +1,17 @@
 <?php
-    class clientes{
-        private $idclientes;
+    class Clientes {
+        private $idCliente;
         private $nome;
         private $usuario;
         private $senha;
         private $contato;
         private $cpf;
 
-        public function getIdclientes(){
-            return $this->idclientes;
+        public function getIdCliente(){
+            return $this->idCliente;
         }
-        public function setIdclientes($valor){
-            $this->idclientes = $valor;
+        public function setIdCliente($valor){
+            $this->idCliente = $valor;
         }
         public function getNome(){
             return $this->nome;
@@ -43,10 +43,4 @@
         public function setUsuario($valor){
             $this->usuario = $valor;
         }
-        
-
-
-        
     }
-
-?>
